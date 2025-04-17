@@ -18,7 +18,24 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false }: QuizQuestionProps
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const { toast } = useToast();
 
-  const questions = quizQuestions[topic];
+  // Convert from topic ID (like "desarrollo-web") to topic key in quizQuestions (like "web")
+  const topicKey = topic === "desarrollo-web" ? "web" : 
+                  topic === "historia" ? "history" : null;
+  
+  // Handle case where topic doesn't exist in quizQuestions
+  if (!topicKey || !quizQuestions[topicKey]) {
+    return (
+      <div className="flex-grow flex items-center justify-center p-4">
+        <Card className={`w-full max-w-2xl p-6 text-center ${isDarkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`}>
+          <h2 className="text-2xl font-bold mb-4">¡Tema no disponible!</h2>
+          <p className="mb-6">Lo sentimos, este tema aún no está disponible.</p>
+          <Button onClick={() => onFinish(0, 0)}>Volver</Button>
+        </Card>
+      </div>
+    );
+  }
+
+  const questions = quizQuestions[topicKey];
   const question = questions[currentQuestion];
   
   const cardClassName = isDarkMode 
