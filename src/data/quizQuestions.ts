@@ -1,9 +1,10 @@
-
 interface Question {
   id: number;
   text: string;
+  image?: string;
   options: {
     text: string;
+    image?: string;
     isCorrect: boolean;
   }[];
 }
@@ -214,6 +215,93 @@ export const quizQuestions: QuizData = {
         { text: "John Adams", isCorrect: false },
         { text: "Benjamin Franklin", isCorrect: false },
         { text: "George Washington", isCorrect: true }
+      ]
+    }
+  ],
+  design: [
+    {
+      id: 1,
+      text: "¿Qué principio de diseño se muestra en esta imagen?",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+      options: [
+        { text: "Balance", isCorrect: true },
+        { text: "Contraste", isCorrect: false },
+        { text: "Ritmo", isCorrect: false },
+        { text: "Proximidad", isCorrect: false }
+      ]
+    },
+    {
+      id: 2,
+      text: "¿Cuál es la paleta de colores más adecuada para transmitir calma?",
+      options: [
+        { text: "Rojos y naranjas", isCorrect: false },
+        { text: "Azules y verdes", isCorrect: true },
+        { text: "Negros y grises", isCorrect: false },
+        { text: "Amarillos y rojos", isCorrect: false }
+      ]
+    }
+  ],
+  typography: [
+    {
+      id: 1,
+      text: "¿Qué tipo de fuente es más adecuada para textos largos?",
+      options: [
+        { text: "Serif", isCorrect: true },
+        { text: "Sans-serif", isCorrect: false },
+        { text: "Display", isCorrect: false },
+        { text: "Decorativa", isCorrect: false }
+      ]
+    }
+  ],
+  ai: [
+    {
+      id: 1,
+      text: "¿Qué tipo de IA se muestra en esta imagen?",
+      image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b",
+      options: [
+        { text: "Procesamiento de Lenguaje Natural", isCorrect: false },
+        { text: "Visión por Computadora", isCorrect: true },
+        { text: "Aprendizaje por Refuerzo", isCorrect: false },
+        { text: "Redes Neuronales", isCorrect: false }
+      ]
+    }
+  ],
+  geography: [
+    {
+      id: 1,
+      text: "¿Qué montaña se muestra en la imagen?",
+      image: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+      options: [
+        { text: "Monte Everest", isCorrect: false },
+        { text: "Monte Kilimanjaro", isCorrect: false },
+        { text: "Monte Fuji", isCorrect: true },
+        { text: "Mont Blanc", isCorrect: false }
+      ]
+    }
+  ],
+  art: [
+    {
+      id: 1,
+      text: "¿Qué estilo arquitectónico se muestra en esta imagen?",
+      image: "https://images.unsplash.com/photo-1466442929976-97f336a657be",
+      options: [
+        { text: "Gótico", isCorrect: false },
+        { text: "Islámico", isCorrect: true },
+        { text: "Románico", isCorrect: false },
+        { text: "Barroco", isCorrect: false }
+      ]
+    }
+  ],
+  cinema: [
+    {
+      id: 1,
+      text: "¿De qué película es esta escena icónica?",
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
+      options: [
+        { text: "Blade Runner", isCorrect: false },
+        { text: "Matrix", isCorrect: true },
+        { text: "Inception", isCorrect: false },
+        { text: "Tron", isCorrect: false }
       ]
     }
   ]

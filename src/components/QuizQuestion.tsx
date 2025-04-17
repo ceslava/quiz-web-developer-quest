@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,11 +17,9 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false }: QuizQuestionProps
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const { toast } = useToast();
 
-  // Convert from topic ID (like "desarrollo-web") to topic key in quizQuestions (like "web")
   const topicKey = topic === "desarrollo-web" ? "web" : 
                   topic === "historia" ? "history" : null;
   
-  // Handle case where topic doesn't exist in quizQuestions
   if (!topicKey || !quizQuestions[topicKey]) {
     return (
       <div className="flex-grow flex items-center justify-center p-4">
@@ -85,6 +82,16 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false }: QuizQuestionProps
           </span>
         </div>
         
+        {question.image && (
+          <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
+            <img
+              src={question.image}
+              alt="Pregunta"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+        
         <h2 className="text-2xl font-bold text-center">
           {question.text}
         </h2>
@@ -111,7 +118,14 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false }: QuizQuestionProps
                 onClick={() => handleOptionClick(index, option.isCorrect)}
                 disabled={selectedOption !== null}
               >
-                {option.text}
+                {option.image ? (
+                  <div className="flex items-center gap-3">
+                    <img src={option.image} alt="" className="w-12 h-12 object-cover rounded" />
+                    <span>{option.text}</span>
+                  </div>
+                ) : (
+                  option.text
+                )}
               </Button>
             </motion.div>
           ))}
