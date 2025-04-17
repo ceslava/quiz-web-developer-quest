@@ -1,13 +1,27 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { BookOpen, Code, Palette, Globe, BookType, Brain, Landmark, FilmIcon, Tv, Users } from "lucide-react";
+
+const topics = [
+  { id: "desarrollo-web", name: "Desarrollo Web", icon: Code },
+  { id: "historia", name: "Historia", icon: BookOpen },
+  { id: "diseño", name: "Diseño", icon: Palette },
+  { id: "tipografía", name: "Tipografía", icon: BookType },
+  { id: "ia", name: "IA", icon: Brain },
+  { id: "geografía", name: "Geografía", icon: Globe },
+  { id: "arte", name: "Arte", icon: Palette },
+  { id: "cine", name: "Cine", icon: FilmIcon },
+  { id: "series", name: "Series", icon: Tv },
+  { id: "cultura", name: "Cultura", icon: Users }
+];
 
 const formSchema = z.object({
   name: z.string().optional(),
@@ -19,9 +33,12 @@ const formSchema = z.object({
 
 interface QuizStartProps {
   onStart: (data: z.infer<typeof formSchema>) => void;
+  isDarkMode?: boolean;
 }
 
-const QuizStart = ({ onStart }: QuizStartProps) => {
+const QuizStart = ({ onStart, isDarkMode = false }: QuizStartProps) => {
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,10 +46,19 @@ const QuizStart = ({ onStart }: QuizStartProps) => {
     },
   });
 
+  const handleTopicSelect = (topicId: string) => {
+    setSelectedTopic(topicId);
+    form.setValue("topic", topicId);
+  };
+
+  const cardClassName = isDarkMode 
+    ? "bg-slate-800 border-slate-700 shadow-xl" 
+    : "bg-white shadow-lg";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <Card className="w-full max-w-md p-6 space-y-6 bg-white shadow-lg">
-        <h2 className="text-2xl font-bold text-slate-800 text-center">
+    <div className="flex-grow flex items-center justify-center p-4">
+      <Card className={`w-full max-w-md p-6 space-y-6 ${cardClassName}`}>
+        <h2 className="text-2xl font-bold text-center">
           ¡Bienvenido al Quiz!
         </h2>
         <Form {...form}>
@@ -44,7 +70,7 @@ const QuizStart = ({ onStart }: QuizStartProps) => {
                 <FormItem>
                   <FormLabel>Nombre (opcional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tu nombre" {...field} />
+                    <Input placeholder="Tu nombre" {...field} className={isDarkMode ? "bg-slate-700 border-slate-600" : ""} />
                   </FormControl>
                 </FormItem>
               )}
@@ -56,7 +82,7 @@ const QuizStart = ({ onStart }: QuizStartProps) => {
                 <FormItem>
                   <FormLabel>Email (opcional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="tu@email.com" type="email" {...field} />
+                    <Input placeholder="tu@email.com" type="email" {...field} className={isDarkMode ? "bg-slate-700 border-slate-600" : ""} />
                   </FormControl>
                 </FormItem>
               )}
@@ -64,24 +90,41 @@ const QuizStart = ({ onStart }: QuizStartProps) => {
             <FormField
               control={form.control}
               name="topic"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
-                  <FormLabel>Tema</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona un tema" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="web">Desarrollo Web</SelectItem>
-                      <SelectItem value="history">Historia</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Elige un tema</FormLabel>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {topics.map((topic) => {
+                      const TopicIcon = topic.icon;
+                      const isSelected = selectedTopic === topic.id;
+                      
+                      return (
+                        <motion.div
+                          key={topic.id}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleTopicSelect(topic.id)}
+                          className={`cursor-pointer rounded-full px-3 py-1.5 flex items-center gap-2 transition-colors ${
+                            isSelected 
+                              ? 'bg-primary text-primary-foreground' 
+                              : isDarkMode 
+                                ? 'bg-slate-700 hover:bg-slate-600 text-slate-200' 
+                                : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
+                          }`}
+                        >
+                          <TopicIcon size={16} />
+                          <span className="text-sm font-medium truncate">{topic.name}</span>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                  {form.formState.errors.topic && (
+                    <p className="text-red-500 text-sm mt-1">{form.formState.errors.topic.message}</p>
+                  )}
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full mt-6">
               Comenzar Quiz
             </Button>
           </form>
