@@ -2,6 +2,7 @@
 import { useState } from "react";
 import QuizQuestion from "@/components/QuizQuestion";
 import QuizStart from "@/components/QuizStart";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [quizStarted, setQuizStarted] = useState(false);
