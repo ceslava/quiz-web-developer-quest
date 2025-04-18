@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,34 +29,26 @@ const topics = [
 ];
 
 interface QuizStartProps {
-  onStart: (data: { topic: string; name?: string }) => void;
-  isDarkMode?: boolean;
+  onStart: (data: { topic: string }) => void;
   userName?: string;
 }
 
-const QuizStart = ({ onStart, isDarkMode = false, userName }: QuizStartProps) => {
+const QuizStart = ({ onStart, userName }: QuizStartProps) => {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [localName, setLocalName] = useState(userName || "");
-
-  const formSchema = z.object({
-    name: z.string().optional(),
-    topic: z.string({
-      required_error: "Por favor selecciona un tema",
-    }),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      topic: "",
-      name: localName,
-    },
-  });
 
   const handleTopicSelect = (topicId: string) => {
     setSelectedTopic(topicId);
-    form.setValue("topic", topicId);
+    onStart({ topic: topicId });
+  };
+
+  const handleRandomTopic = () => {
+    const availableTopics = topics.filter(topic =>
+      topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      topic.category?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const randomTopic = availableTopics[Math.floor(Math.random() * availableTopics.length)];
+    handleTopicSelect(randomTopic.id);
   };
 
   const filteredTopics = topics.filter(topic =>
@@ -74,98 +65,77 @@ const QuizStart = ({ onStart, isDarkMode = false, userName }: QuizStartProps) =>
     return acc;
   }, {} as Record<string, typeof topics>);
 
-  const cardClassName = isDarkMode 
-    ? "bg-slate-800 border-slate-700 shadow-xl" 
-    : "bg-white shadow-lg";
-
   return (
-    <div className="flex-grow flex items-center justify-center p-4">
-      <Card className={`w-full max-w-4xl p-6 space-y-6 ${cardClassName}`}>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onStart)} className="space-y-4">
-            {!userName && (
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nombre (opcional)</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="Tu nombre" 
-                        {...field} 
-                        className={isDarkMode ? "bg-slate-700 border-slate-600" : ""}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            )}
-            
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <Input
-                type="text"
-                placeholder="Buscar temas..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={`pl-10 ${isDarkMode ? "bg-slate-700 border-slate-600" : ""}`}
-              />
-            </div>
+    <div className="min-h-screen flex items-center justify-center p-4 pt-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-4xl space-y-6"
+      >
+        <div className="text-center space-y-4 mb-8">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+            ¡Hola{userName ? `, ${userName}` : ''}! 🎯
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            Elige un tema para comenzar tu aventura
+          </p>
+        </div>
 
-            <FormField
-              control={form.control}
-              name="topic"
-              render={() => (
-                <FormItem>
-                  <div className="space-y-6">
-                    {Object.entries(groupedTopics).map(([category, categoryTopics]) => (
-                      <div key={category}>
-                        <h3 className="text-lg font-semibold mb-3">{category}</h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                          {categoryTopics.map((topic) => {
-                            const TopicIcon = topic.icon;
-                            const isSelected = selectedTopic === topic.id;
-                            
-                            return (
-                              <motion.div
-                                key={topic.id}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => handleTopicSelect(topic.id)}
-                                className={`cursor-pointer rounded-xl p-4 flex flex-col items-center gap-2 transition-colors ${
-                                  isSelected 
-                                    ? 'bg-primary text-primary-foreground' 
-                                    : isDarkMode 
-                                      ? 'bg-slate-700 hover:bg-slate-600 text-slate-200' 
-                                      : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
-                                }`}
-                              >
-                                <TopicIcon size={24} />
-                                <span className="text-sm font-medium text-center">{topic.name}</span>
-                              </motion.div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {form.formState.errors.topic && (
-                    <p className="text-red-500 text-sm mt-1">{form.formState.errors.topic.message}</p>
-                  )}
-                </FormItem>
-              )}
+        <div className="flex gap-4 mb-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Input
+              type="text"
+              placeholder="Buscar temas..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
             />
-            <Button 
-              type="submit" 
-              className="w-full mt-6"
-              disabled={!selectedTopic}
+          </div>
+          <Button
+            onClick={handleRandomTopic}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+          >
+            Tema al Azar
+          </Button>
+        </div>
+
+        <div className="grid gap-6">
+          {Object.entries(groupedTopics).map(([category, categoryTopics]) => (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
             >
-              Comenzar Quiz
-            </Button>
-          </form>
-        </Form>
-      </Card>
+              <h3 className="text-lg font-semibold mb-3 text-purple-600 dark:text-purple-400">
+                {category}
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {categoryTopics.map((topic) => {
+                  const TopicIcon = topic.icon;
+                  return (
+                    <motion.button
+                      key={topic.id}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleTopicSelect(topic.id)}
+                      className="p-4 rounded-xl bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center gap-3 group"
+                    >
+                      <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900 group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors">
+                        <TopicIcon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                      </div>
+                      <span className="text-sm font-medium text-center text-gray-700 dark:text-gray-200">
+                        {topic.name}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 };

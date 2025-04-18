@@ -1,42 +1,30 @@
 
 import { useState, useEffect } from "react";
-import { Heart, Moon, Sun, Search } from "lucide-react";
+import { motion } from "framer-motion";
 import QuizQuestion from "@/components/QuizQuestion";
 import QuizStart from "@/components/QuizStart";
 import { Button } from "@/components/ui/button";
 import QuizResults from "@/components/QuizResults";
-import { Input } from "@/components/ui/input";
+import PresentationPage from "@/components/PresentationPage";
 
 const Index = () => {
   const [quizStarted, setQuizStarted] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState("");
   const [quizCompleted, setQuizCompleted] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [score, setScore] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
   const [userName, setUserName] = useState<string>(() => {
     return localStorage.getItem('userName') || '';
   });
-  const [searchQuery, setSearchQuery] = useState("");
+  const [showTopics, setShowTopics] = useState(false);
 
-  useEffect(() => {
-    // Set initial dark mode preference and load user data
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
+  const handleNameSubmit = (name: string) => {
+    setUserName(name);
+    localStorage.setItem('userName', name);
+    setShowTopics(true);
   };
 
-  const handleStart = (data: { topic: string; name?: string }) => {
-    if (data.name) {
-      setUserName(data.name);
-      localStorage.setItem('userName', data.name);
-    }
+  const handleStart = (data: { topic: string; }) => {
     setSelectedTopic(data.topic);
     setQuizStarted(true);
   };
@@ -47,7 +35,6 @@ const Index = () => {
     setQuizCompleted(true);
     setQuizStarted(false);
 
-    // Save high score if it's better than previous
     const highScores = JSON.parse(localStorage.getItem('highScores') || '{}');
     if (!highScores[selectedTopic] || highScores[selectedTopic] < finalScore) {
       highScores[selectedTopic] = finalScore;
@@ -60,41 +47,12 @@ const Index = () => {
     setSelectedTopic("");
     setScore(0);
     setWrongAnswers(0);
+    setShowTopics(true);
   };
-
-  const baseClasses = `min-h-screen transition-colors duration-300 ${
-    isDarkMode 
-      ? "bg-gradient-to-br from-slate-900 to-slate-800 text-white" 
-      : "bg-gradient-to-br from-slate-50 to-blue-100"
-  }`;
-
-  const renderHeader = () => (
-    <header className="p-4 flex justify-between items-center">
-      <div className="flex flex-col items-start">
-        <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
-          <Heart className={`${isDarkMode ? "text-red-400" : "text-red-500"} fill-current`} size={24} />
-          <span>
-            {quizStarted 
-              ? `¡Adelante${userName ? `, ${userName}` : ''}! ${selectedTopic}` 
-              : '¡Demuestra tus conocimientos!'}
-          </span>
-        </h1>
-        {userName && !quizStarted && (
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            ¡Bienvenido de nuevo, {userName}!
-          </p>
-        )}
-      </div>
-      <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="rounded-full">
-        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-      </Button>
-    </header>
-  );
 
   if (quizCompleted) {
     return (
-      <div className={`${baseClasses} flex flex-col`}>
-        {renderHeader()}
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-pink-50 dark:from-slate-900 dark:to-slate-800">
         <QuizResults 
           score={score} 
           totalQuestions={10} 
@@ -103,54 +61,26 @@ const Index = () => {
           userName={userName}
           onRestart={resetQuiz} 
         />
-
-        <footer className="mt-auto p-4 text-center">
-          <p className="flex items-center justify-center gap-2 text-sm text-gray-400">
-            Hecho con <Heart className="text-red-500 fill-red-500" size={16} /> por 
-            <a 
-              href="https://ceslava.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`${isDarkMode ? "text-blue-300" : "text-blue-600"} hover:underline ml-1`}
-            >
-              Cristian Eslava
-            </a>
-          </p>
-        </footer>
       </div>
     );
   }
 
   return (
-    <div className={`${baseClasses} flex flex-col`}>
-      {renderHeader()}
-      {quizStarted ? (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-pink-50 dark:from-slate-900 dark:to-slate-800">
+      {!showTopics ? (
+        <PresentationPage onNameSubmit={handleNameSubmit} initialName={userName} />
+      ) : quizStarted ? (
         <QuizQuestion 
           topic={selectedTopic} 
-          onFinish={handleFinish} 
-          isDarkMode={isDarkMode}
+          onFinish={handleFinish}
           userName={userName}
         />
       ) : (
         <QuizStart 
           onStart={handleStart} 
-          isDarkMode={isDarkMode} 
           userName={userName}
         />
       )}
-      <footer className="mt-auto p-4 text-center">
-        <p className="flex items-center justify-center gap-2 text-sm text-gray-400">
-          Hecho con <Heart className="text-red-500 fill-red-500" size={16} /> por 
-          <a 
-            href="https://ceslava.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={`${isDarkMode ? "text-blue-300" : "text-blue-600"} hover:underline ml-1`}
-          >
-            Cristian Eslava
-          </a>
-        </p>
-      </footer>
     </div>
   );
 };
