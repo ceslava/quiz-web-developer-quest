@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { quizQuestions } from "@/data/quizQuestions";
+import { quizQuestions, topicMapping } from "@/data/quizQuestions";
 import { motion } from "framer-motion";
 
 interface QuizQuestionProps {
@@ -17,10 +18,10 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false }: QuizQuestionProps
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const { toast } = useToast();
 
-  const topicKey = topic === "desarrollo-web" ? "web" : 
-                  topic === "historia" ? "history" : null;
+  // Get the mapped topic key
+  const topicKey = topicMapping[topic] || null;
   
-  if (!topicKey || !quizQuestions[topicKey]) {
+  if (!topicKey || !quizQuestions[topicKey] || quizQuestions[topicKey].length === 0) {
     return (
       <div className="flex-grow flex items-center justify-center p-4">
         <Card className={`w-full max-w-2xl p-6 text-center ${isDarkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`}>

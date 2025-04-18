@@ -1,21 +1,19 @@
 
 import { QuizData } from './types';
-import { webQuestions } from './questions/web';
-import { historyQuestions } from './questions/history';
-import { designQuestions } from './questions/design';
-import { typographyQuestions } from './questions/typography';
-import { aiQuestions } from './questions/ai';
-import { geographyQuestions } from './questions/geography';
-import { artQuestions } from './questions/art';
-import { cinemaQuestions } from './questions/cinema';
+import quizData from './quizData.json';
 
-export const quizQuestions: QuizData = {
-  web: webQuestions,
-  history: historyQuestions,
-  design: designQuestions,
-  typography: typographyQuestions,
-  ai: aiQuestions,
-  geography: geographyQuestions,
-  art: artQuestions,
-  cinema: cinemaQuestions,
+export const quizQuestions: QuizData = quizData;
+
+// Topic mapping for the app
+export const topicMapping: Record<string, string> = {
+  "desarrollo-web": "web",
+  "historia": "history",
+  "diseño": "design",
+  "tipografía": "typography",
+  "ia": "ai",
+  "geografía": "geography",
+  "arte": "art",
+  "cine": "cinema",
+  "series": "cinema", // Using cinema for now since series doesn't have its own
+  "cultura": "history" // Using history for now since cultura doesn't have its own
 };

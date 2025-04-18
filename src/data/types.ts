@@ -13,3 +13,9 @@ export interface Question {
 export interface QuizData {
   [key: string]: Question[];
 }
+
+export interface QuizTopics {
+  id: string;
+  name: string;
+  icon: string;
+}
