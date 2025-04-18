@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { BookOpen, Code, Palette, Globe, BookType, Brain, Landmark, FilmIcon, Tv, Users, Layout, Figma, Image, Cube, Map } from "lucide-react";
+import { BookOpen, Code, Palette, Globe, BookType, Brain, Landmark, FilmIcon, Tv, Users, Layout, Figma, Image, Box, Map, Search } from "lucide-react";
 
 const topics = [
   { id: "desarrollo-web", name: "Desarrollo Web", icon: Code, category: "Desarrollo" },
@@ -23,7 +24,7 @@ const topics = [
   { id: "ux", name: "UX Design", icon: Layout, category: "Diseño" },
   { id: "figma", name: "Figma", icon: Figma, category: "Diseño" },
   { id: "photoshop", name: "Photoshop", icon: Image, category: "Diseño" },
-  { id: "3d", name: "3D", icon: Cube, category: "Diseño" },
+  { id: "3d", name: "3D", icon: Box, category: "Diseño" },
   { id: "paises", name: "Países", icon: Map, category: "Geografía" },
   { id: "continentes", name: "Continentes", icon: Globe, category: "Geografía" }
 ];

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,15 +9,15 @@ interface QuizQuestionProps {
   topic: string;
   onFinish: (score: number, wrongAnswers: number) => void;
   isDarkMode?: boolean;
+  userName?: string;
 }
 
-const QuizQuestion = ({ topic, onFinish, isDarkMode = false }: QuizQuestionProps) => {
+const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQuestionProps) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const { toast } = useToast();
 
-  // Get the mapped topic key
   const topicKey = topicMapping[topic] || null;
   
   if (!topicKey || !quizQuestions[topicKey] || quizQuestions[topicKey].length === 0) {

@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"; 
@@ -79,7 +80,7 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onR
               <h3 className="text-lg font-semibold mb-3">Tus mejores puntuaciones:</h3>
               <div className="space-y-2">
                 {Object.entries(highScores)
-                  .sort(([,a], [,b]) => (b as number) - (a as number))
+                  .sort(([,a], [,b]) => (Number(b) - Number(a)))
                   .map(([topicName, topScore]) => (
                     <div key={topicName} className="flex justify-between items-center">
                       <span className="capitalize">{topicName}</span>
