@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,7 @@ const topics = [
   { id: "desarrollo-web", name: "Desarrollo Web", icon: Code, category: "Desarrollo" },
   { id: "historia", name: "Historia", icon: BookOpen, category: "Cultura" },
   { id: "diseño", name: "Diseño", icon: Palette, category: "Diseño" },
-  { id: "tipografía", name: "Tipografía", icon: BookType, category: "Diseño" },
+  { id: "tipografía", name: "Tipografía", icon: BookOpen, category: "Diseño" },
   { id: "ia", name: "IA", icon: Brain, category: "Tecnología" },
   { id: "geografía", name: "Geografía", icon: Globe, category: "Cultura" },
   { id: "arte", name: "Arte", icon: Palette, category: "Arte" },
