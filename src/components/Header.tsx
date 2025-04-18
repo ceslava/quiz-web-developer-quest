@@ -22,7 +22,7 @@ const Header = ({ userName, topic, showBackToTopics = true }: HeaderProps) => {
           <Brain className="w-8 h-8 text-purple-500" />
         </button>
       ) : (
-        <div className="w-8" /> {/* Spacer for alignment */}
+        <div className="w-8" /> /* Spacer for alignment */
       )}
       
       <div className="flex items-center gap-4">
