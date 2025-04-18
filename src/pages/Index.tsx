@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import QuizQuestion from "@/components/QuizQuestion";
@@ -90,6 +89,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-pink-50 dark:from-slate-900 dark:to-slate-800">
+      
       {!showTopics ? (
         <PresentationPage onNameSubmit={handleNameSubmit} initialName={userName} />
       ) : quizStarted ? (

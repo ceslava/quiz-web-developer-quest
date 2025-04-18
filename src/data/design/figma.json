@@ -1,0 +1,43 @@
+{
+  "id": "figma",
+  "name": "Figma",
+  "category": "design",
+  "questions": [
+    {
+      "id": "figma-1",
+      "text": "¿Qué es un 'frame' en Figma?",
+      "options": [
+        "Un contenedor para elementos de diseño",
+        "Un tipo de letra",
+        "Una animación",
+        "Un plugin"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Un frame es un contenedor fundamental en Figma que permite organizar y estructurar elementos de diseño."
+    },
+    {
+      "id": "figma-2",
+      "text": "¿Qué son los 'components' en Figma?",
+      "options": [
+        "Elementos reutilizables que se pueden usar en múltiples diseños",
+        "Herramientas de dibujo",
+        "Tipos de archivos",
+        "Efectos visuales"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Los components son elementos reutilizables que permiten mantener la consistencia en todo el diseño."
+    },
+    {
+      "id": "figma-3",
+      "text": "¿Qué es 'auto-layout' en Figma?",
+      "options": [
+        "Una función que organiza automáticamente elementos y mantiene su espaciado",
+        "Un tipo de fuente",
+        "Una herramienta de color",
+        "Un formato de exportación"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Auto-layout es una función que permite crear diseños responsivos que se ajustan automáticamente según su contenido."
+    }
+  ]
+}

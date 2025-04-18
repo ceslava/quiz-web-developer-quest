@@ -68,7 +68,7 @@ const PresentationPage = ({ onNameSubmit, initialName = '' }: PresentationPagePr
         </form>
 
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-          Descubre más de 15 temas diferentes y compite por el ranking más alto
+          Descubre cientos de temas diferentes y pon a prueba tus conocimientos.
         </p>
       </motion.div>
     </div>

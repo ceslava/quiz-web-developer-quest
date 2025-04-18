@@ -1,0 +1,43 @@
+{
+  "id": "ux",
+  "name": "Experiencia de Usuario",
+  "category": "design",
+  "questions": [
+    {
+      "id": "ux-1",
+      "text": "¿Qué es la usabilidad en UX?",
+      "options": [
+        "La facilidad con la que los usuarios pueden usar un producto",
+        "El aspecto visual de una interfaz",
+        "La velocidad de carga de una página web",
+        "El número de funciones de un producto"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La usabilidad mide la facilidad de uso y la eficiencia con la que los usuarios pueden lograr sus objetivos."
+    },
+    {
+      "id": "ux-2",
+      "text": "¿Qué es un 'user journey'?",
+      "options": [
+        "El recorrido que hace un usuario para completar una tarea",
+        "Un tipo de animación",
+        "Una paleta de colores",
+        "Un tipo de letra"
+      ],
+      "correctAnswer": 0,
+      "explanation": "El user journey mapea la secuencia de pasos que sigue un usuario para alcanzar un objetivo en un producto."
+    },
+    {
+      "id": "ux-3",
+      "text": "¿Qué es la arquitectura de información?",
+      "options": [
+        "La organización y estructura de contenido en un sitio web",
+        "El diseño visual de una página",
+        "El código fuente de una aplicación",
+        "Un tipo de servidor web"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La arquitectura de información se refiere a cómo se organiza y estructura el contenido para facilitar su comprensión y navegación."
+    }
+  ]
+}

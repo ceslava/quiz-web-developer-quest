@@ -1,0 +1,31 @@
+{
+  "id": "javascript",
+  "name": "JavaScript",
+  "category": "desarrollo",
+  "questions": [
+    {
+      "text": "¿Qué es una función de callback?",
+      "options": [
+        "Una función que se pasa como argumento a otra función",
+        "Una función que devuelve un valor",
+        "Una función que se ejecuta al inicio del programa",
+        "Una función que maneja errores"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Una función de callback es una función que se pasa como argumento y se ejecuta después de que otra función haya terminado.",
+      "id": "javascript-1"
+    },
+    {
+      "text": "¿Qué método se usa para agregar un elemento al final de un array?",
+      "options": [
+        "push()",
+        "append()",
+        "addToEnd()",
+        "insert()"
+      ],
+      "correctAnswer": 0,
+      "explanation": "El método push() añade uno o más elementos al final de un array y devuelve la nueva longitud del array.",
+      "id": "javascript-2"
+    }
+  ]
+}

@@ -1,158 +1,155 @@
-import React, { useState } from 'react';
-import { Card } from "@/components/ui/card";
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { quizQuestions, topicMapping } from "@/data/quizQuestions";
-import { motion } from "framer-motion";
 import Header from './Header';
+import Footer from './Footer';
+import { ChevronLeft, ChevronRight, CheckCircle, XCircle } from "lucide-react";
+import { Question } from '../data/types';
+import { topicCategoryMap } from '../data/topicCategoryMap';
+import { useNavigate } from 'react-router-dom';
 
 interface QuizQuestionProps {
   topic: string;
-  onFinish: (score: number, wrongAnswers: number, incorrectAnswers: Array<{question: string, userAnswer: string, correctAnswer: string}>) => void;
-  userName?: string;
+  category?: string;
+  topicName?: string;
+  userName: string;
+  onFinish: (score: number, wrongAnswers: number, incorrectAnswers: Array<{ question: string; userAnswer: string; correctAnswer: string }>) => void;
 }
 
-const QuizQuestion = ({ topic, onFinish, userName }: QuizQuestionProps) => {
+const QuizQuestion = ({ topic, category, topicName = topic, userName, onFinish }: QuizQuestionProps) => {
+  const resolvedCategory = category || topicCategoryMap[topic];
+  const navigate = useNavigate();
+
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [incorrectAnswers, setIncorrectAnswers] = useState<Array<{
-    question: string;
-    userAnswer: string;
-    correctAnswer: string;
-  }>>([]);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<Array<{ question: string; userAnswer: string; correctAnswer: string }>>([]);
 
-  const topicKey = topicMapping[topic] || null;
-  
-  if (!topicKey || !quizQuestions[topicKey] || quizQuestions[topicKey].length === 0) {
-    return (
-      <div className="flex-grow flex items-center justify-center p-4">
-        <Card className="w-full max-w-2xl p-6 text-center">
-          <h2 className="text-2xl font-bold mb-4">¡Tema no disponible!</h2>
-          <p className="mb-6">Lo sentimos, este tema aún no está disponible.</p>
-          <Button onClick={() => onFinish(0, 0, [])}>Volver</Button>
-        </Card>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const loadedQuestions: Question[] = await import(`../data/topics/${resolvedCategory}/${topic}.json`)
+          .then(module => module.default.questions);
+        setQuestions(loadedQuestions);
+      } catch (error) {
+        console.error("Error al cargar las preguntas:", error);
+      }
+    };
+    loadQuestions();
+  }, [resolvedCategory, topic]);
 
-  const questions = quizQuestions[topicKey];
-  const question = questions[currentQuestion];
-  
-  const handleOptionClick = (index: number, isCorrectOption: boolean) => {
+  const handleAnswer = (index: number) => {
     setSelectedOption(index);
-    setIsCorrect(isCorrectOption);
-    setShowFeedback(true);
 
-    if (isCorrectOption) {
-      setScore(score + 1);
-    } else {
+    const isCorrect = index === questions[currentQuestion].correctAnswer;
+
+    if (!isCorrect) {
       setIncorrectAnswers([
         ...incorrectAnswers,
         {
-          question: question.text,
-          userAnswer: question.options[index].text,
-          correctAnswer: question.options.find(opt => opt.isCorrect)?.text || ''
-        }
+          question: questions[currentQuestion].text,
+          userAnswer: questions[currentQuestion].options[index].text,
+          correctAnswer: questions[currentQuestion].options[questions[currentQuestion].correctAnswer].text,
+        },
       ]);
+    } else {
+      setScore(score + 1);
     }
-
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelectedOption(null);
-        setShowFeedback(false);
-      } else {
-        const finalScore = score + (isCorrectOption ? 1 : 0);
-        const wrongAnswers = questions.length - finalScore;
-        onFinish(finalScore, wrongAnswers, incorrectAnswers);
-      }
-    }, 1500);
   };
 
-  const variants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0 }
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedOption(null);
+    } else {
+      onFinish(score, questions.length - score, incorrectAnswers);
+      navigate('/summary', {
+        state: {
+          userName,
+          totalCorrectAnswers: score,
+          totalTestsTaken: 1,
+          incorrectAnswers,
+        },
+      });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      setSelectedOption(null);
+    }
   };
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
-  return (
-    <div className="flex-grow flex flex-col items-center bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-900 dark:to-slate-800 min-h-screen">
-      <Header userName={userName} topic={topic} />
-      
-      <div className="w-full max-w-2xl p-4">
-        <Progress value={progress} className="w-full h-2" />
-        <div className="flex justify-between items-center mt-2 text-sm text-slate-600 dark:text-slate-300">
-          <span>Pregunta {currentQuestion + 1} de {questions.length}</span>
-          <span>Puntuación: {score}/{currentQuestion}</span>
-        </div>
+  if (questions.length === 0) {
+    return <div>Cargando preguntas...</div>;
+  }
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-6"
-        >
-          <Card className="w-full p-6 space-y-6 shadow-lg bg-white/90 dark:bg-slate-800/90 backdrop-blur">
-            {question.image && (
-              <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
-                <img
-                  src={question.image}
-                  alt="Pregunta"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
-            
-            <h2 className="text-2xl font-bold text-center text-slate-800 dark:text-white">
-              {question.text}
-            </h2>
-            
-            <div className="grid gap-4">
+  const question = questions[currentQuestion];
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 animate-gradient">
+      <Header userName={userName} topicName={`¿Cuánto sabes de ${topicName}?`} />
+      <div className="flex flex-col items-center justify-center flex-1 mt-16 px-4">
+        <div className="w-full max-w-2xl">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl text-white">{question.text}</h2>
+          </div>
+          <div className="flex items-center justify-between w-full">
+            <button
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+              className="p-2 text-white  bg-gray-700 rounded-full"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <div className="flex flex-col gap-4 w-full">
               {question.options.map((option, index) => (
-                <motion.div
+                <div
                   key={index}
-                  variants={{
-                    hidden: { opacity: 0, x: -50 },
-                    visible: { opacity: 1, x: 0 }
-                  }}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className={`relative  text-lg rounded-lg shadow-md transition-all answer-box ${
+                    selectedOption !== null
+                      ? index === question.correctAnswer
+                        ? 'correct-answer'
+                        : index === selectedOption
+                        ? 'incorrect-answer animate-fall'
+                        : 'bg-white text-gray-800'
+                      : 'bg-white text-gray-800'
+                  }`}
                 >
                   <Button
-                    variant={selectedOption === index 
-                      ? (option.isCorrect ? "default" : "destructive")
-                      : "outline"
-                    }
-                    className={`w-full p-4 text-left justify-start text-lg transition-all ${
-                      selectedOption === index && option.isCorrect
-                        ? "bg-green-500 hover:bg-green-600 text-white"
-                        : selectedOption === index
-                        ? "bg-red-500 hover:bg-red-600 text-white"
-                        : "hover:bg-slate-100 dark:hover:bg-slate-700"
-                    }`}
-                    onClick={() => handleOptionClick(index, option.isCorrect)}
+                    onClick={() => handleAnswer(index)}
                     disabled={selectedOption !== null}
+                    className="w-full h-full p-4 text-center break-words bg-white text-gray-800 hover:bg-gray-200"
                   >
-                    {option.image ? (
-                      <div className="flex items-center gap-3">
-                        <img src={option.image} alt="" className="w-12 h-12 object-cover rounded" />
-                        <span>{option.text}</span>
-                      </div>
-                    ) : (
-                      option.text
-                    )}
+                    {option.text}
                   </Button>
-                </motion.div>
+                 
+                </div>
               ))}
             </div>
-          </Card>
-        </motion.div>
+            <button
+              onClick={handleNext}
+              disabled={currentQuestion === questions.length - 1}
+              className="p-2 text-white bg-gray-700 rounded-full hover:bg-gray-600  ml-4"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="w-full bg-gray-300 rounded-full h-6 mt-6 relative">
+            <div
+              className="bg-blue-500 h-6 rounded-full"
+              style={{ width: `${progress}%` }}
+            ></div>
+            <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-800 font-bold">
+              {score} / {questions.length}
+            </div>
+          </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

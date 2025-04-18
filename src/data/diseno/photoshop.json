@@ -1,0 +1,31 @@
+{
+  "id": "photoshop",
+  "name": "Photoshop",
+  "category": "diseno",
+  "questions": [
+    {
+      "text": "¿Qué es una capa en Photoshop?",
+      "options": [
+        "Un elemento independiente que puede editarse sin afectar al resto de la imagen",
+        "Un filtro de color",
+        "Una herramienta de recorte",
+        "Un tipo de pincel"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Las capas son elementos independientes que permiten trabajar en diferentes partes de una imagen sin afectar al resto.",
+      "id": "photoshop-1"
+    },
+    {
+      "text": "¿Qué herramienta se usa para seleccionar áreas específicas de una imagen?",
+      "options": [
+        "Herramienta de marco rectangular",
+        "Pincel",
+        "Texto",
+        "Relleno"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La herramienta de marco rectangular permite seleccionar áreas específicas de una imagen para editarlas.",
+      "id": "photoshop-2"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "id": "cine",
+  "name": "Cine",
+  "category": "entretenimiento",
+  "questions": [
+    {
+      "id": "cine-1",
+      "text": "¿Quién dirigió la película 'Titanic'?",
+      "options": [
+        { "text": "Steven Spielberg" },
+        { "text": "James Cameron" },
+        { "text": "Christopher Nolan" },
+        { "text": "Martin Scorsese" }
+      ],
+      "correctAnswer": 1,
+      "explanation": "James Cameron dirigió 'Titanic', una de las películas más taquilleras de la historia.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/2/22/Titanic_poster.jpg"
+    },
+    {
+      "id": "cine-2",
+      "text": "¿Cuál es el nombre del personaje principal en 'El Padrino'?",
+      "options": [
+        { "text": "Michael Corleone" },
+        { "text": "Vito Corleone" },
+        { "text": "Sonny Corleone" },
+        { "text": "Fredo Corleone" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Michael Corleone es el personaje principal de 'El Padrino', interpretado por Al Pacino."
+    },
+    {
+      "id": "cine-3",
+      "text": "¿Qué película ganó el Oscar a Mejor Película en 2020?",
+      "options": [
+        { "text": "1917" },
+        { "text": "Joker" },
+        { "text": "Parasite" },
+        { "text": "Once Upon a Time in Hollywood" }
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Parasite', dirigida por Bong Joon-ho, ganó el Oscar a Mejor Película en 2020.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/5/53/Parasite_%282019_film%29.png"
+    },
+    {
+      "id": "cine-4",
+      "text": "¿Qué actor interpretó a Jack Sparrow en 'Piratas del Caribe'?",
+      "options": [
+        { "text": "Johnny Depp" },
+        { "text": "Orlando Bloom" },
+        { "text": "Brad Pitt" },
+        { "text": "Leonardo DiCaprio" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Johnny Depp interpretó al icónico personaje Jack Sparrow en la saga 'Piratas del Caribe'.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/5/5a/Jack_Sparrow_In_Pirates_of_the_Caribbean-_Dead_Men_Tell_No_Tales.jpg"
+    },
+    {
+      "id": "cine-5",
+      "text": "¿Qué película animada es conocida por la frase 'Hakuna Matata'?",
+      "options": [
+        { "text": "El Rey León" },
+        { "text": "Aladdín" },
+        { "text": "La Bella y la Bestia" },
+        { "text": "Pocahontas" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Hakuna Matata' es una frase popular de la película animada 'El Rey León'.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/3/3d/The_Lion_King_poster.jpg"
+    },
+    {
+      "id": "cine-6",
+      "text": "¿Qué director es conocido por películas como 'Pulp Fiction' y 'Kill Bill'?",
+      "options": [
+        { "text": "Quentin Tarantino" },
+        { "text": "Guy Ritchie" },
+        { "text": "David Fincher" },
+        { "text": "Ridley Scott" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Quentin Tarantino es conocido por su estilo único en películas como 'Pulp Fiction' y 'Kill Bill'."
+    },
+    {
+      "id": "cine-7",
+      "text": "¿En qué año se estrenó la primera película de 'Star Wars'?",
+      "options": [
+        { "text": "1975" },
+        { "text": "1977" },
+        { "text": "1980" },
+        { "text": "1983" }
+      ],
+      "correctAnswer": 1,
+      "explanation": "La primera película de 'Star Wars', dirigida por George Lucas, se estrenó en 1977.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/87/StarWarsMoviePoster1977.jpg"
+    },
+    {
+      "id": "cine-8",
+      "text": "¿Qué película incluye la famosa frase 'Yo soy tu padre'?",
+      "options": [
+        { "text": "Star Wars: Una Nueva Esperanza" },
+        { "text": "Star Wars: El Imperio Contraataca" },
+        { "text": "Star Wars: El Retorno del Jedi" },
+        { "text": "Star Wars: La Amenaza Fantasma" }
+      ],
+      "correctAnswer": 1,
+      "explanation": "La frase 'Yo soy tu padre' aparece en 'Star Wars: El Imperio Contraataca'."
+    },
+    {
+      "id": "cine-9",
+      "text": "¿Qué película de Alfred Hitchcock es famosa por la escena de la ducha?",
+      "options": [
+        { "text": "Psicosis" },
+        { "text": "Los Pájaros" },
+        { "text": "Vértigo" },
+        { "text": "La Ventana Indiscreta" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La escena de la ducha es una de las más icónicas de 'Psicosis', dirigida por Alfred Hitchcock.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/b/b9/Psycho_%281960%29.png"
+    },
+    {
+      "id": "cine-10",
+      "text": "¿Qué actor interpretó al Joker en 'The Dark Knight'?",
+      "options": [
+        { "text": "Joaquin Phoenix" },
+        { "text": "Jack Nicholson" },
+        { "text": "Heath Ledger" },
+        { "text": "Jared Leto" }
+      ],
+      "correctAnswer": 2,
+      "explanation": "Heath Ledger interpretó al Joker en 'The Dark Knight', ganando un Oscar póstumo por su actuación.",
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/8a/Dark_Knight.jpg"
+    }
+  ]
+}

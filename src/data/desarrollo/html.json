@@ -1,0 +1,55 @@
+{
+  "id": "html",
+  "name": "HTML",
+  "category": "desarrollo",
+  "questions": [
+    {
+      "text": "¿Qué significa HTML?",
+      "options": [
+        "Hyper Text Markup Language",
+        "High Text Modern Language",
+        "Hyper Transfer Markup Language",
+        "High Transfer Modern Language"
+      ],
+      "correctAnswer": 0,
+      "explanation": "HTML significa Hyper Text Markup Language, el lenguaje estándar para crear páginas web.",
+      "id": "html-1"
+    },
+    {
+      "text": "¿Cuál es la etiqueta correcta para crear un enlace?",
+      "options": [
+        "<a href='url'>enlace</a>",
+        "<link>enlace</link>",
+        "<href>enlace</href>",
+        "<url>enlace</url>"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La etiqueta <a> con el atributo href es la forma correcta de crear enlaces en HTML.",
+      "id": "html-2"
+    },
+    {
+      "text": "¿Qué etiqueta HTML se utiliza para definir una tabla?",
+      "options": [
+        "<table>",
+        "<tab>",
+        "<tr>",
+        "<grid>"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La etiqueta <table> se usa para crear tablas en HTML.",
+      "id": "html-3"
+    },
+    {
+      "text": "¿Cuál es el propósito de la etiqueta <meta>?",
+      "options": [
+        "Definir metadatos sobre el documento HTML",
+        "Crear enlaces a otros documentos",
+        "Insertar imágenes en la página",
+        "Definir párrafos de texto"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La etiqueta <meta> proporciona metadatos sobre el documento HTML, como descripción, palabras clave y codificación.",
+      "id": "html-4"
+    }
+  ]
+}

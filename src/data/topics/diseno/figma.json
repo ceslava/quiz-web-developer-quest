@@ -1,0 +1,187 @@
+{
+  "id": "figma",
+  "name": "Figma",
+  "category": "diseno",
+  "questions": [
+    {
+      "id": "figma-1",
+      "text": "¿Qué es Figma?",
+      "options": [
+        { "text": "Una herramienta de diseño colaborativo basada en la nube" },
+        { "text": "Un editor de texto avanzado" },
+        { "text": "Un software de edición de video" },
+        { "text": "Un sistema operativo" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Figma es una herramienta de diseño colaborativo basada en la nube utilizada para diseño de interfaces y prototipos."
+    },
+    {
+      "id": "figma-2",
+      "text": "¿Qué formato de archivo utiliza Figma para guardar proyectos?",
+      "options": [
+        { "text": ".fig" },
+        { "text": ".psd" },
+        { "text": ".ai" },
+        { "text": ".xd" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Figma utiliza el formato .fig para guardar proyectos."
+    },
+    {
+      "id": "figma-3",
+      "text": "¿Qué funcionalidad permite a los usuarios trabajar en tiempo real en Figma?",
+      "options": [
+        { "text": "Colaboración en vivo" },
+        { "text": "Modo sin conexión" },
+        { "text": "Exportación de archivos" },
+        { "text": "Modo presentación" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La colaboración en vivo permite a los usuarios trabajar en tiempo real en el mismo archivo."
+    },
+    {
+      "id": "figma-4",
+      "text": "¿Qué herramienta de Figma se utiliza para crear prototipos interactivos?",
+      "options": [
+        { "text": "Prototype" },
+        { "text": "Design" },
+        { "text": "Inspect" },
+        { "text": "Export" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La herramienta Prototype de Figma se utiliza para crear prototipos interactivos."
+    },
+    {
+      "id": "figma-5",
+      "text": "¿Qué atajo de teclado se utiliza para agrupar elementos en Figma?",
+      "options": [
+        { "text": "Ctrl + G (Windows) / Cmd + G (Mac)" },
+        { "text": "Ctrl + E (Windows) / Cmd + E (Mac)" },
+        { "text": "Ctrl + Z (Windows) / Cmd + Z (Mac)" },
+        { "text": "Ctrl + Shift + G (Windows) / Cmd + Shift + G (Mac)" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "El atajo Ctrl + G (Windows) / Cmd + G (Mac) se utiliza para agrupar elementos en Figma."
+    },
+    {
+      "id": "figma-6",
+      "text": "¿Qué es un 'Frame' en Figma?",
+      "options": [
+        { "text": "Un contenedor para organizar elementos de diseño" },
+        { "text": "Una herramienta para editar texto" },
+        { "text": "Un tipo de archivo" },
+        { "text": "Un efecto de animación" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Un Frame es un contenedor que se utiliza para organizar elementos de diseño en Figma."
+    },
+    {
+      "id": "figma-7",
+      "text": "¿Qué herramienta se utiliza para alinear elementos en Figma?",
+      "options": [
+        { "text": "Align" },
+        { "text": "Prototype" },
+        { "text": "Inspect" },
+        { "text": "Export" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La herramienta Align se utiliza para alinear elementos en Figma."
+    },
+    {
+      "id": "figma-8",
+      "text": "¿Qué es un 'Component' en Figma?",
+      "options": [
+        { "text": "Un elemento reutilizable en el diseño" },
+        { "text": "Un archivo de imagen" },
+        { "text": "Un tipo de fuente" },
+        { "text": "Un efecto de animación" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Un Component es un elemento reutilizable que se puede usar en múltiples partes del diseño."
+    },
+    {
+      "id": "figma-9",
+      "text": "¿Qué herramienta permite inspeccionar el diseño para desarrolladores?",
+      "options": [
+        { "text": "Inspect" },
+        { "text": "Prototype" },
+        { "text": "Align" },
+        { "text": "Export" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La herramienta Inspect permite a los desarrolladores inspeccionar el diseño para obtener detalles técnicos."
+    },
+    {
+      "id": "figma-10",
+      "text": "¿Qué funcionalidad permite crear variaciones de un componente en Figma?",
+      "options": [
+        { "text": "Variants" },
+        { "text": "Frames" },
+        { "text": "Prototypes" },
+        { "text": "Groups" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La funcionalidad Variants permite crear variaciones de un componente en Figma."
+    },
+    {
+      "id": "figma-11",
+      "text": "¿Qué herramienta permite agregar efectos como sombras y desenfoques?",
+      "options": [
+        { "text": "Effects" },
+        { "text": "Prototype" },
+        { "text": "Align" },
+        { "text": "Inspect" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La herramienta Effects permite agregar efectos como sombras y desenfoques en Figma."
+    },
+    {
+      "id": "figma-12",
+      "text": "¿Qué es un 'Team Library' en Figma?",
+      "options": [
+        { "text": "Una biblioteca compartida de componentes y estilos" },
+        { "text": "Un archivo de diseño individual" },
+        { "text": "Un tipo de animación" },
+        { "text": "Un sistema de navegación" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Un Team Library es una biblioteca compartida de componentes y estilos para equipos en Figma."
+    },
+    {
+      "id": "figma-13",
+      "text": "¿Qué herramienta permite exportar diseños en diferentes formatos?",
+      "options": [
+        { "text": "Export" },
+        { "text": "Prototype" },
+        { "text": "Align" },
+        { "text": "Inspect" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La herramienta Export permite exportar diseños en diferentes formatos como PNG, JPG y SVG."
+    },
+    {
+      "id": "figma-14",
+      "text": "¿Qué funcionalidad permite crear animaciones entre pantallas en Figma?",
+      "options": [
+        { "text": "Smart Animate" },
+        { "text": "Prototype" },
+        { "text": "Align" },
+        { "text": "Inspect" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "La funcionalidad Smart Animate permite crear animaciones suaves entre pantallas en Figma."
+    },
+    {
+      "id": "figma-15",
+      "text": "¿Qué es un 'Style' en Figma?",
+      "options": [
+        { "text": "Un conjunto de propiedades reutilizables como colores y tipografías" },
+        { "text": "Un archivo de diseño" },
+        { "text": "Un tipo de animación" },
+        { "text": "Un sistema de navegación" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Un Style en Figma es un conjunto de propiedades reutilizables como colores, tipografías y efectos."
+    }
+  ]
+}

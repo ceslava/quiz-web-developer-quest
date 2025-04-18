@@ -1,0 +1,43 @@
+{
+  "id": "ux",
+  "name": "UX/UI",
+  "category": "diseno",
+  "questions": [
+    {
+      "id": "ux-1",
+      "text": "¿Qué significa UX?",
+      "options": [
+        { "text": "User Experience" },
+        { "text": "User Extension" },
+        { "text": "User Execution" },
+        { "text": "User Exchange" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "UX significa User Experience, que se refiere a la experiencia del usuario al interactuar con un producto o servicio."
+    },
+    {
+      "id": "ux-2",
+      "text": "¿Qué herramienta se utiliza comúnmente para prototipado en UX?",
+      "options": [
+        { "text": "Photoshop" },
+        { "text": "Figma" },
+        { "text": "Excel" },
+        { "text": "Word" }
+      ],
+      "correctAnswer": 1,
+      "explanation": "Figma es una herramienta popular para el diseño y prototipado en UX/UI."
+    },
+    {
+      "id": "ux-3",
+      "text": "¿Qué es un 'user journey'?",
+      "options": [
+        { "text": "Un mapa del recorrido del usuario" },
+        { "text": "Un tipo de animación" },
+        { "text": "Un diseño de interfaz" },
+        { "text": "Un sistema de navegación" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Un 'user journey' es un mapa que describe el recorrido del usuario al interactuar con un producto o servicio."
+    }
+  ]
+}

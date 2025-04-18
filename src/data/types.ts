@@ -1,24 +1,22 @@
-
-export interface Question {
-  id: number;
+export interface QuestionOption {
   text: string;
   image?: string;
-  options: {
-    text: string;
-    image?: string;
-    isCorrect: boolean;
-  }[];
 }
 
-export interface QuizData {
-  [key: string]: Question[];
+export interface Question {
+  id: string;
+  text: string;
+  image?: string;
+  options: QuestionOption[];
+  correctAnswer: number;
+  explanation: string;
 }
 
-export interface QuizTopics {
+export interface Topic {
   id: string;
   name: string;
-  icon: string;
-  category?: string;
+  category: string;
+  questions: Question[];
 }
 
 export interface UserSession {

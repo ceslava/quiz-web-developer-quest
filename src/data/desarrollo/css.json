@@ -1,0 +1,43 @@
+{
+  "id": "css",
+  "name": "CSS",
+  "category": "desarrollo",
+  "questions": [
+    {
+      "text": "¿Qué propiedad CSS se usa para cambiar el color del texto?",
+      "options": [
+        "color",
+        "text-color",
+        "font-color",
+        "text-style"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La propiedad 'color' es la correcta para cambiar el color del texto en CSS.",
+      "id": "css-1"
+    },
+    {
+      "text": "¿Qué propiedad CSS se usa para cambiar el espacio entre elementos?",
+      "options": [
+        "margin",
+        "spacing",
+        "gap",
+        "distance"
+      ],
+      "correctAnswer": 0,
+      "explanation": "La propiedad margin se usa para controlar el espacio exterior entre elementos.",
+      "id": "css-2"
+    },
+    {
+      "text": "¿Qué significa CSS Flexbox?",
+      "options": [
+        "Un modelo de diseño unidimensional para crear layouts flexibles",
+        "Un tipo de fuente",
+        "Un color específico",
+        "Un tipo de borde"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Flexbox es un modelo de diseño CSS que permite crear layouts flexibles y responsivos de manera eficiente.",
+      "id": "css-3"
+    }
+  ]
+}

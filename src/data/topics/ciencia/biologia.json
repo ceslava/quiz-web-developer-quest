@@ -1,0 +1,47 @@
+{
+  "id": "biologia",
+  "name": "Biología",
+  "category": "ciencia",
+  "questions": [
+    {
+      "id": "biologia-1",
+      "text": "¿Cuál es la molécula responsable de almacenar la información genética en los organismos vivos?",
+      "options": [
+        { "text": "ADN (Ácido Desoxirribonucleico)" },
+        { "text": "ARN (Ácido Ribonucleico)" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "El ADN es la molécula que almacena la información genética en la mayoría de los organismos vivos."
+    },
+    {
+      "id": "biologia-2",
+      "text": "¿Qué tipo de célula carece de núcleo definido?",
+      "options": [
+        { "text": "Célula procariota" },
+        { "text": "Célula eucariota" }
+      ],
+      "correctAnswer": 0,
+      "explanation": "Las células procariotas, como las bacterias, no tienen un núcleo definido."
+    },
+    {
+      "id": "biologia-3",
+      "text": "¿Cuál de las siguientes estructuras está presente en las células vegetales pero no en las animales?",
+      "options": [
+        { "text": "Mitocondrias" },
+        { "text": "Cloroplastos" }
+      ],
+      "correctAnswer": 1,
+      "explanation": "Los cloroplastos son exclusivos de las células vegetales y son responsables de la fotosíntesis."
+    },
+    {
+      "id": "biologia-4",
+      "text": "¿Qué proceso permite a las plantas convertir la luz solar en energía química?",
+      "options": [
+        { "text": "Respiración celular" },
+        { "text": "Fotosíntesis" }
+      ],
+      "correctAnswer": 1,
+      "explanation": "La fotosíntesis es el proceso mediante el cual las plantas convierten la luz solar en energía química almacenada en forma de glucosa."
+    }
+  ]
+}
