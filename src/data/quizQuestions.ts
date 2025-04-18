@@ -14,6 +14,13 @@ export const topicMapping: Record<string, string> = {
   "geografía": "geography",
   "arte": "art",
   "cine": "cinema",
-  "series": "cinema", // Using cinema for now since series doesn't have its own
-  "cultura": "history" // Using history for now since cultura doesn't have its own
+  "series": "cinema",
+  "cultura": "history",
+  "ux": "ux",
+  "figma": "design",
+  "photoshop": "design",
+  "3d": "design",
+  "paises": "geography",
+  "continentes": "geography"
 };
+

@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"; 
@@ -9,11 +8,13 @@ interface QuizResultsProps {
   totalQuestions: number;
   wrongAnswers: number;
   topic: string;
+  userName?: string;
   onRestart: () => void;
 }
 
-const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, onRestart }: QuizResultsProps) => {
+const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onRestart }: QuizResultsProps) => {
   const percentage = Math.round((score / totalQuestions) * 100);
+  const highScores = JSON.parse(localStorage.getItem('highScores') || '{}');
   
   const getMessageByScore = () => {
     if (percentage >= 90) return "¡Excelente! ¡Eres un experto!";
@@ -48,7 +49,9 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, onRestart }: 
             </div>
           </div>
           
-          <h2 className="text-2xl font-bold mb-2">¡Quiz Completado!</h2>
+          <h2 className="text-2xl font-bold mb-2">
+            {userName ? `¡Bien hecho, ${userName}!` : '¡Quiz Completado!'}
+          </h2>
           <p className="text-lg font-medium mb-4">{getMessageByScore()}</p>
           
           <div className="space-y-4">
@@ -70,6 +73,23 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, onRestart }: 
               Respuestas incorrectas: {wrongAnswers}
             </p>
           </div>
+          
+          {Object.keys(highScores).length > 0 && (
+            <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
+              <h3 className="text-lg font-semibold mb-3">Tus mejores puntuaciones:</h3>
+              <div className="space-y-2">
+                {Object.entries(highScores)
+                  .sort(([,a], [,b]) => (b as number) - (a as number))
+                  .map(([topicName, topScore]) => (
+                    <div key={topicName} className="flex justify-between items-center">
+                      <span className="capitalize">{topicName}</span>
+                      <span className="font-medium">{topScore}/10</span>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          )}
           
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
             <p className="font-medium mb-3">Comparte tu resultado:</p>

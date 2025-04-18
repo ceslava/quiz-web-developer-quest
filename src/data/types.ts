@@ -18,4 +18,12 @@ export interface QuizTopics {
   id: string;
   name: string;
   icon: string;
+  category?: string;
+}
+
+export interface UserSession {
+  name: string;
+  highScores: {
+    [key: string]: number;
+  };
 }
