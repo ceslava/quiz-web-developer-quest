@@ -1,13 +1,15 @@
+
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { quizQuestions, topicMapping } from "@/data/quizQuestions";
 import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
 
 interface QuizQuestionProps {
   topic: string;
-  onFinish: (score: number, wrongAnswers: number) => void;
+  onFinish: (score: number, wrongAnswers: number, incorrectAnswers: Array<{question: string, userAnswer: string, correctAnswer: string}>) => void;
   isDarkMode?: boolean;
   userName?: string;
 }
@@ -16,6 +18,11 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<Array<{
+    question: string;
+    userAnswer: string;
+    correctAnswer: string;
+  }>>([]);
   const { toast } = useToast();
 
   const topicKey = topicMapping[topic] || null;
@@ -23,10 +30,10 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
   if (!topicKey || !quizQuestions[topicKey] || quizQuestions[topicKey].length === 0) {
     return (
       <div className="flex-grow flex items-center justify-center p-4">
-        <Card className={`w-full max-w-2xl p-6 text-center ${isDarkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`}>
+        <Card className="w-full max-w-2xl p-6 text-center">
           <h2 className="text-2xl font-bold mb-4">¡Tema no disponible!</h2>
           <p className="mb-6">Lo sentimos, este tema aún no está disponible.</p>
-          <Button onClick={() => onFinish(0, 0)}>Volver</Button>
+          <Button onClick={() => onFinish(0, 0, [])}>Volver</Button>
         </Card>
       </div>
     );
@@ -35,23 +42,20 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
   const questions = quizQuestions[topicKey];
   const question = questions[currentQuestion];
   
-  const cardClassName = isDarkMode 
-    ? "bg-slate-800 border-slate-700" 
-    : "bg-white";
-
   const handleOptionClick = (index: number, isCorrect: boolean) => {
     setSelectedOption(index);
     if (isCorrect) {
       setScore(score + 1);
+    } else {
+      setIncorrectAnswers([
+        ...incorrectAnswers,
+        {
+          question: question.text,
+          userAnswer: question.options[index].text,
+          correctAnswer: question.options.find(opt => opt.isCorrect)?.text || ''
+        }
+      ]);
     }
-    
-    toast({
-      title: isCorrect ? "¡Correcto!" : "Incorrecto",
-      description: isCorrect 
-        ? "¡Muy bien! Has elegido la respuesta correcta." 
-        : `La respuesta correcta era: ${questions[currentQuestion].options.find(opt => opt.isCorrect)?.text}`,
-      variant: isCorrect ? "default" : "destructive",
-    });
 
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
@@ -60,9 +64,9 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
       } else {
         const finalScore = score + (isCorrect ? 1 : 0);
         const wrongAnswers = questions.length - finalScore;
-        onFinish(finalScore, wrongAnswers);
+        onFinish(finalScore, wrongAnswers, incorrectAnswers);
       }
-    }, 2000);
+    }, 1500);
   };
 
   const variants = {
@@ -70,18 +74,23 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
     visible: { opacity: 1, x: 0 }
   };
 
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
+
   return (
-    <div className="flex-grow flex items-center justify-center p-4">
-      <Card className={`w-full max-w-2xl p-6 space-y-6 shadow-lg ${cardClassName}`}>
-        <div className="flex justify-between items-center">
-          <span className={`text-sm ${isDarkMode ? "text-slate-300" : "text-slate-500"}`}>
-            Pregunta {currentQuestion + 1} de {questions.length}
-          </span>
-          <span className={`text-sm ${isDarkMode ? "text-slate-300" : "text-slate-500"}`}>
-            Puntuación: {score}/{currentQuestion}
-          </span>
+    <div className="flex-grow flex flex-col items-center justify-center p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-900 dark:to-slate-800 min-h-screen">
+      <div className="w-full max-w-2xl mb-8">
+        <div className="flex justify-between items-center mb-2 text-slate-700 dark:text-slate-200">
+          <span className="font-medium">{userName}</span>
+          <span className="font-medium">{topic}</span>
         </div>
-        
+        <Progress value={progress} className="w-full h-2" />
+        <div className="flex justify-between items-center mt-2 text-sm text-slate-600 dark:text-slate-300">
+          <span>Pregunta {currentQuestion + 1} de {questions.length}</span>
+          <span>Puntuación: {score}/{currentQuestion}</span>
+        </div>
+      </div>
+
+      <Card className="w-full max-w-2xl p-6 space-y-6 shadow-lg bg-white dark:bg-slate-800">
         {question.image && (
           <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
             <img
@@ -92,7 +101,7 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
           </div>
         )}
         
-        <h2 className="text-2xl font-bold text-center">
+        <h2 className="text-2xl font-bold text-center text-slate-800 dark:text-white">
           {question.text}
         </h2>
         
@@ -112,9 +121,11 @@ const QuizQuestion = ({ topic, onFinish, isDarkMode = false, userName }: QuizQue
                 }
                 className={`w-full p-4 text-left justify-start text-lg transition-all ${
                   selectedOption === index && option.isCorrect
-                    ? "bg-green-500 text-white hover:bg-green-600"
-                    : ""
-                } ${isDarkMode && selectedOption === null ? "hover:bg-slate-700" : ""}`}
+                    ? "bg-green-500 hover:bg-green-600 text-white"
+                    : selectedOption === index
+                    ? "bg-red-500 hover:bg-red-600 text-white"
+                    : "hover:bg-slate-100 dark:hover:bg-slate-700"
+                }`}
                 onClick={() => handleOptionClick(index, option.isCorrect)}
                 disabled={selectedOption !== null}
               >

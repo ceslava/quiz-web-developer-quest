@@ -1,7 +1,8 @@
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"; 
-import { Share2, Twitter, Facebook, Trophy } from "lucide-react";
+import { Share2, Twitter, Facebook, Trophy, Star, Award, ThumbsDown } from "lucide-react";
 
 interface QuizResultsProps {
   score: number;
@@ -10,19 +11,52 @@ interface QuizResultsProps {
   topic: string;
   userName?: string;
   onRestart: () => void;
+  incorrectAnswers?: Array<{
+    question: string;
+    userAnswer: string;
+    correctAnswer: string;
+  }>;
 }
 
-const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onRestart }: QuizResultsProps) => {
+const QuizResults = ({ 
+  score, 
+  totalQuestions, 
+  wrongAnswers, 
+  topic, 
+  userName, 
+  onRestart,
+  incorrectAnswers = []
+}: QuizResultsProps) => {
   const percentage = Math.round((score / totalQuestions) * 100);
   const highScores = JSON.parse(localStorage.getItem('highScores') || '{}');
   
-  const getMessageByScore = () => {
-    if (percentage >= 90) return "¡Excelente! ¡Eres un experto!";
-    if (percentage >= 70) return "¡Muy bien! Tienes buenos conocimientos.";
-    if (percentage >= 50) return "¡No está mal! Pero puedes mejorar.";
-    return "¡Sigue intentándolo! Hay que practicar más.";
+  const getResultIcon = () => {
+    if (percentage >= 90) return <Trophy className="h-12 w-12 text-amber-500" />;
+    if (percentage >= 70) return <Star className="h-12 w-12 text-purple-500" />;
+    if (percentage >= 50) return <Award className="h-12 w-12 text-blue-500" />;
+    return <ThumbsDown className="h-12 w-12 text-red-500" />;
+  };
+
+  const getMessageAndColor = () => {
+    if (percentage >= 90) return { 
+      message: "¡Excelente! ¡Eres un experto!", 
+      bgColor: "bg-amber-100 dark:bg-amber-800" 
+    };
+    if (percentage >= 70) return { 
+      message: "¡Muy bien! Tienes buenos conocimientos.", 
+      bgColor: "bg-purple-100 dark:bg-purple-800" 
+    };
+    if (percentage >= 50) return { 
+      message: "¡No está mal! Pero puedes mejorar.", 
+      bgColor: "bg-blue-100 dark:bg-blue-800" 
+    };
+    return { 
+      message: "¡Sigue intentándolo! Hay que practicar más.", 
+      bgColor: "bg-red-100 dark:bg-red-800" 
+    };
   };
   
+  const { message, bgColor } = getMessageAndColor();
   const shareText = `He obtenido ${score}/${totalQuestions} (${percentage}%) en el quiz de ${topic}. ¡Inténtalo tú también!`;
   
   const shareOnTwitter = () => {
@@ -43,16 +77,15 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onR
         <Card className="w-full max-w-md p-8 text-center space-y-6">
           <div className="flex justify-center mb-4">
             <div className="relative">
-              <div className="rounded-full bg-amber-100 p-4 dark:bg-amber-800">
-                <Trophy className="h-12 w-12 text-amber-500" />
+              <div className={`rounded-full ${bgColor} p-4`}>
+                {getResultIcon()}
               </div>
             </div>
           </div>
           
           <h2 className="text-2xl font-bold mb-2">
-            {userName ? `¡Bien hecho, ${userName}!` : '¡Quiz Completado!'}
+            {userName ? `¡${message} ${userName}!` : message}
           </h2>
-          <p className="text-lg font-medium mb-4">{getMessageByScore()}</p>
           
           <div className="space-y-4">
             <div className="flex justify-center items-center gap-3">
@@ -68,11 +101,20 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onR
                 transition={{ duration: 1, delay: 0.2 }}
               />
             </div>
-            
-            <p className="text-gray-500 dark:text-gray-400">
-              Respuestas incorrectas: {wrongAnswers}
-            </p>
           </div>
+
+          {incorrectAnswers.length > 0 && (
+            <div className="mt-6 space-y-4 text-left">
+              <h3 className="font-semibold text-lg">Respuestas incorrectas:</h3>
+              {incorrectAnswers.map((item, index) => (
+                <div key={index} className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg space-y-2">
+                  <p className="font-medium">{item.question}</p>
+                  <p className="text-red-600 dark:text-red-400">Tu respuesta: {item.userAnswer}</p>
+                  <p className="text-green-600 dark:text-green-400">Respuesta correcta: {item.correctAnswer}</p>
+                </div>
+              ))}
+            </div>
+          )}
           
           {Object.keys(highScores).length > 0 && (
             <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
@@ -83,7 +125,7 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onR
                   .map(([topicName, topScore]) => (
                     <div key={topicName} className="flex justify-between items-center">
                       <span className="capitalize">{topicName}</span>
-                      <span className="font-semibold">{topScore}/10</span>
+                      <span className="font-semibold">{String(topScore)}/10</span>
                     </div>
                   ))
                 }
@@ -132,6 +174,10 @@ const QuizResults = ({ score, totalQuestions, wrongAnswers, topic, userName, onR
           <Button onClick={onRestart} className="w-full mt-6">
             Intentar otro tema
           </Button>
+
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+            Desarrollado por Cristian Eslava
+          </p>
         </Card>
       </motion.div>
     </div>

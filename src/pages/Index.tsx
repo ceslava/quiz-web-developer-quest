@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import QuizQuestion from "@/components/QuizQuestion";
 import QuizStart from "@/components/QuizStart";
-import { Button } from "@/components/ui/button";
 import QuizResults from "@/components/QuizResults";
 import PresentationPage from "@/components/PresentationPage";
 
@@ -13,6 +12,11 @@ const Index = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [score, setScore] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<Array<{
+    question: string;
+    userAnswer: string;
+    correctAnswer: string;
+  }>>([]);
   const [userName, setUserName] = useState<string>(() => {
     return localStorage.getItem('userName') || '';
   });
@@ -29,9 +33,14 @@ const Index = () => {
     setQuizStarted(true);
   };
 
-  const handleFinish = (finalScore: number, totalWrong: number) => {
+  const handleFinish = (finalScore: number, totalWrong: number, wrongAnswersList: Array<{
+    question: string;
+    userAnswer: string;
+    correctAnswer: string;
+  }>) => {
     setScore(finalScore);
     setWrongAnswers(totalWrong);
+    setIncorrectAnswers(wrongAnswersList);
     setQuizCompleted(true);
     setQuizStarted(false);
 
@@ -47,6 +56,7 @@ const Index = () => {
     setSelectedTopic("");
     setScore(0);
     setWrongAnswers(0);
+    setIncorrectAnswers([]);
     setShowTopics(true);
   };
 
@@ -59,7 +69,8 @@ const Index = () => {
           wrongAnswers={wrongAnswers} 
           topic={selectedTopic}
           userName={userName}
-          onRestart={resetQuiz} 
+          onRestart={resetQuiz}
+          incorrectAnswers={incorrectAnswers}
         />
       </div>
     );
