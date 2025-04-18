@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import QuizQuestion from "@/components/QuizQuestion";
@@ -25,6 +26,16 @@ const Index = () => {
 
   const showResultsFromState = location.state?.showResults;
   const showTopicsFromState = location.state?.showTopics;
+
+  // Define resetQuiz function before using it
+  const resetQuiz = () => {
+    setQuizCompleted(false);
+    setSelectedTopic("");
+    setScore(0);
+    setWrongAnswers(0);
+    setIncorrectAnswers([]);
+    setShowTopics(true);
+  };
 
   if (showResultsFromState && quizCompleted) {
     return (
@@ -75,15 +86,6 @@ const Index = () => {
       highScores[selectedTopic] = finalScore;
       localStorage.setItem('highScores', JSON.stringify(highScores));
     }
-  };
-
-  const resetQuiz = () => {
-    setQuizCompleted(false);
-    setSelectedTopic("");
-    setScore(0);
-    setWrongAnswers(0);
-    setIncorrectAnswers([]);
-    setShowTopics(true);
   };
 
   return (
