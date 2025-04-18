@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"; 
@@ -175,9 +174,11 @@ const QuizResults = ({
             Intentar otro tema
           </Button>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-            Desarrollado por Cristian Eslava
-          </p>
+          <footer className="fixed bottom-4 left-0 right-0 text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Hecho con ❤️ por <a href="https://ceslava.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600">ceslava</a>
+            </p>
+          </footer>
         </Card>
       </motion.div>
     </div>

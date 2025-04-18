@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,16 +48,31 @@ interface QuizStartProps {
 const QuizStart = ({ onStart, userName }: QuizStartProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [completedTopics, setCompletedTopics] = useState<string[]>([]);
 
-  const categories = Array.from(new Set(topics.map(topic => topic.category)));
-  
+  useEffect(() => {
+    const highScores = JSON.parse(localStorage.getItem('highScores') || '{}');
+    setCompletedTopics(Object.keys(highScores));
+  }, []);
+
   const handleRandomTopic = () => {
-    const availableTopics = topics.filter(topic =>
-      topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      topic.category?.toLowerCase().includes(searchQuery.toLowerCase())
+    const availableTopics = topics.filter(topic => 
+      !completedTopics.includes(topic.id) &&
+      (topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      topic.category?.toLowerCase().includes(searchQuery.toLowerCase()))
     );
-    const randomTopic = availableTopics[Math.floor(Math.random() * availableTopics.length)];
-    onStart({ topic: randomTopic.id });
+    
+    if (availableTopics.length === 0) {
+      const allTopics = topics.filter(topic =>
+        topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        topic.category?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      const randomTopic = allTopics[Math.floor(Math.random() * allTopics.length)];
+      onStart({ topic: randomTopic.id });
+    } else {
+      const randomTopic = availableTopics[Math.floor(Math.random() * availableTopics.length)];
+      onStart({ topic: randomTopic.id });
+    }
   };
 
   const filteredTopics = topics.filter(topic =>
@@ -151,13 +166,16 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => onStart({ topic: topic.id })}
-                          className="p-4 rounded-xl bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center gap-3 group"
+                          className={`p-4 rounded-xl bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center gap-3 group ${
+                            completedTopics.includes(topic.id) ? 'opacity-50' : ''
+                          }`}
                         >
                           <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900 group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors">
-                            <CategoryIcon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                            <topic.icon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                           </div>
                           <span className="text-sm font-medium text-center text-gray-700 dark:text-gray-200">
                             {topic.name}
+                            {completedTopics.includes(topic.id) && ' ✓'}
                           </span>
                         </motion.button>
                       ))}
@@ -169,9 +187,11 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
           })}
         </div>
 
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-          Desarrollado por Cristian Eslava
-        </p>
+        <footer className="fixed bottom-4 left-0 right-0 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Hecho con ❤️ por <a href="https://ceslava.com" target="_blank" rel="noopener noreferrer" className="hover:text-purple-600">ceslava</a>
+          </p>
+        </footer>
       </motion.div>
     </div>
   );
