@@ -1,8 +1,24 @@
+
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Brain, Code, Palette, Globe, BookType, FilmIcon, Users, Layout, Box } from "lucide-react";
+import { 
+  Search, 
+  Brain, 
+  Code, 
+  Palette, 
+  Globe, 
+  BookOpen, 
+  FilmIcon, 
+  Users, 
+  Layout, 
+  Box,
+  Tv,
+  Figma,
+  Image,
+  Map
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from './Header';
 
