@@ -288,9 +288,10 @@
     transition: background-color 0.3s ease, color 0.3s ease;
     border: 6px solid #ffffff;
     font-size: 2em;
+    
     /* Verde */
     &::after {
-      content: "bravo !!!";
+      content: "";
       position: absolute;
       right: 0;
       top: 0;
@@ -298,6 +299,7 @@
     }
     & > button {
       font-size: .6em;
+      border-radius: 0;
     }
   }
 
@@ -310,38 +312,15 @@
     color: #000000;
     /* Texto negro */
     transition: background-color 0.3s ease, color 0.3s ease;
+    &::after {
+        content: "❌";
+        position: absolute;
+        right: .6rem;
+        top: .6rem;
+        font-size: .6rem;
+      }
   }
 
-  .animate-stars {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .animate-stars::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    background: url('/path/to/star.svg') no-repeat center;
-    animation: sparkle 1s ease-in-out infinite;
-  }
-
-  /* Animación para el emoji de "manita hacia arriba" */
-  .animate-thumbs-up {
-    animation: thumbs-up 0.5s ease-in-out;
-  }
-
-  /* Animación para el emoji de "manita hacia abajo" */
-  .animate-thumbs-down {
-    animation: thumbs-down 0.5s ease-in-out;
-  }
-
-  /* Animación para hacer que la respuesta incorrecta caiga */
-  .animate-fall {
-    animation: fall 0.5s ease-in-out forwards;
-  }
 
   .btn-primary {
     background-color: #6b46c1;
