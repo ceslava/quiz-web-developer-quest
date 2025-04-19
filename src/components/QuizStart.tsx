@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   Search, 
@@ -18,7 +17,23 @@ import {
   Microscope,
   Gamepad2,
   Car,
-  Shield
+  Shield,
+  Star,
+  Leaf,
+  Flask,
+  Atom,
+  Tv,
+  Heart,
+  Clock,
+  PaintBucket,
+  Ball,
+  Basketball,
+  Tennis,
+  Cake,
+  Wine,
+  Building,
+  Flag,
+  Landmark
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -44,7 +59,6 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
     const highScores = JSON.parse(localStorage.getItem('highScores') || '{}');
     setCompletedTopics(Object.keys(highScores));
     
-    // Cargar solo los temas que tienen preguntas
     const loadTopicsWithQuestions = async () => {
       const allTopics = getAllTopics();
       const topicsWithQuestions = [];
@@ -75,7 +89,6 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
     );
     
     if (filteredTopics.length === 0) {
-      // Si no hay temas sin completar, elegir cualquier tema filtrado
       const searchFilteredTopics = availableTopics.filter(topic =>
         searchQuery === "" || 
         topic.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -127,7 +140,6 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
     }
   };
 
-  // Agrupamos los temas por categoría
   const topicsByCategory = filteredAvailableTopics.reduce((acc, topic) => {
     const category = topic.category || 'otros';
     if (!acc[category]) {
