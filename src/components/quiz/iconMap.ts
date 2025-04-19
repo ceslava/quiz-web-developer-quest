@@ -3,7 +3,7 @@ import {
   Brain, Code, Palette, Globe, FilmIcon, Users, Box,
   BookOpen, Dumbbell, Music, History, ChefHat, Microscope,
   Gamepad2, Car, Shield, Star, Leaf, Flask, Atom, Tv,
-  Heart, Clock, PaintBucket, Ball, Basketball, Tennis,
+  Heart, Clock, PaintBucket, Rocket, Basketball, Racquet,
   Cake, Wine, Building, Flag, Landmark
 } from 'lucide-react';
 
@@ -28,9 +28,9 @@ export const IconMap: Record<string, React.ElementType> = {
   'arte': PaintBucket,
   'musica': Music,
   'literatura': BookOpen,
-  'futbol': Ball,
+  'futbol': Rocket,
   'baloncesto': Basketball,
-  'tenis': Tennis,
+  'tenis': Racquet,
   'f1': Car,
   'cocina': ChefHat,
   'reposteria': Cake,

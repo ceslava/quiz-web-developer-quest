@@ -13,9 +13,9 @@ declare module 'lucide-react' {
   export const Heart: LucideIcon;
   export const Clock: LucideIcon;
   export const PaintBucket: LucideIcon;
-  export const Ball: LucideIcon;
+  export const Rocket: LucideIcon;
   export const Basketball: LucideIcon;
-  export const Tennis: LucideIcon;
+  export const Racquet: LucideIcon;
   export const Cake: LucideIcon;
   export const Wine: LucideIcon;
   export const Building: LucideIcon;
