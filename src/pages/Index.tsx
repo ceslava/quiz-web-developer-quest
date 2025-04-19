@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import QuizQuestion from "@/components/QuizQuestion";
 import QuizStart from "@/components/QuizStart";
@@ -26,7 +27,7 @@ const Index = () => {
   const showResultsFromState = location.state?.showResults;
   const showTopicsFromState = location.state?.showTopics;
 
-  // Define resetQuiz function before using it
+  // Definimos resetQuiz ANTES de usarlo en el renderizado condicional
   const resetQuiz = () => {
     setQuizCompleted(false);
     setSelectedTopic("");
@@ -35,6 +36,14 @@ const Index = () => {
     setIncorrectAnswers([]);
     setShowTopics(true);
   };
+
+  useEffect(() => {
+    if (showTopicsFromState) {
+      setQuizStarted(false);
+      setShowTopics(true);
+      window.history.replaceState({}, '');
+    }
+  }, [showTopicsFromState]);
 
   if (showResultsFromState && quizCompleted) {
     return (
@@ -50,12 +59,6 @@ const Index = () => {
         />
       </div>
     );
-  }
-
-  if (showTopicsFromState) {
-    setQuizStarted(false);
-    setShowTopics(true);
-    window.history.replaceState({}, '');
   }
 
   const handleNameSubmit = (name: string) => {
