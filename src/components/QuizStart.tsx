@@ -1,48 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Search, 
-  Brain, 
-  Code, 
-  Palette, 
-  Globe, 
-  FilmIcon, 
-  Users, 
-  Box, 
-  Check,
-  BookOpen,
-  Dumbbell,
-  Music,
-  History,
-  ChefHat,
-  Microscope,
-  Gamepad2,
-  Car,
-  Shield,
-  Star,
-  Leaf,
-  Flask,
-  Atom,
-  Tv,
-  Heart,
-  Clock,
-  PaintBucket,
-  Ball,
-  Basketball,
-  Tennis,
-  Cake,
-  Wine,
-  Building,
-  Flag,
-  Landmark
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 import Header from './Header';
+import Footer from './Footer';
+import SearchBar from './quiz/SearchBar';
+import TopicCategory from './quiz/TopicCategory';
 import { categories, getAllTopics } from '../config/topicsConfig';
 import { getRandomQuestions } from '../data/topics';
-import { TopicItem } from '../config/topicsConfig';
-import Footer from './Footer';
+import type { TopicItem } from '../config/topicsConfig';
 
 interface QuizStartProps {
   onStart: (data: { topic: string, questions?: any }) => void;
@@ -124,20 +88,9 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
     (!selectedCategory || topic.category === selectedCategory)
   );
 
-  const getCategoryIcon = (category: string) => {
-    switch (category.toLowerCase()) {
-      case 'tecnologia': return Brain;
-      case 'desarrollo': return Code;
-      case 'diseño': return Palette;
-      case 'cultura': return Users;
-      case 'entretenimiento': return FilmIcon;
-      case 'geografía': 
-      case 'geografia': return Globe;
-      case 'ciencia': return Microscope;
-      case 'deportes': return Dumbbell;
-      case 'gastronomia': return ChefHat;
-      default: return Box;
-    }
+  const getCategoryName = (categoryId: string) => {
+    const category = categories.find(c => c.id === categoryId);
+    return category ? category.name : categoryId;
   };
 
   const topicsByCategory = filteredAvailableTopics.reduce((acc, topic) => {
@@ -148,50 +101,6 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
     acc[category].push(topic);
     return acc;
   }, {} as Record<string, TopicItem[]>);
-
-  const getCategoryName = (categoryId: string) => {
-    const category = categories.find(c => c.id === categoryId);
-    return category ? category.name : categoryId;
-  };
-
-  const getTopicIcon = (topic: TopicItem) => {
-    const mappedIcons: Record<string, React.ElementType> = {
-      'desarrollo-web': Code,
-      'ia': Brain,
-      'blockchain': Globe,
-      'ciberseguridad': Shield,
-      'ux': Palette,
-      'figma': Palette,
-      'tipografia': BookOpen,
-      '3d': Box,
-      'espacio': Star,
-      'biologia': Leaf,
-      'quimica': Flask,
-      'fisica': Atom,
-      'cine': FilmIcon,
-      'series': Tv,
-      'videojuegos': Gamepad2,
-      'anime': Heart,
-      'historia': Clock,
-      'arte': PaintBucket,
-      'musica': Music,
-      'literatura': BookOpen,
-      'futbol': Ball,
-      'baloncesto': Basketball,
-      'tenis': Tennis,
-      'f1': Car,
-      'cocina': ChefHat,
-      'reposteria': Cake,
-      'vinos': Wine,
-      'comidas-mundo': Globe,
-      'paises': Globe,
-      'capitales': Building,
-      'banderas': Flag,
-      'maravillas': Landmark
-    };
-
-    return mappedIcons[topic.id] || topic.icon || getCategoryIcon(topic.category || '');
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 animate-gradient">
@@ -208,56 +117,21 @@ const QuizStart = ({ onStart, userName }: QuizStartProps) => {
           </h1>
         </div>
 
-        <div className="flex items-center gap-4 mb-6">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-            <Input
-              type="text"
-              placeholder="Buscar temas..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Button
-            onClick={handleRandomTopic}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-          >
-            Tema al Azar
-          </Button>
-        </div>
+        <SearchBar
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          onRandomTopic={handleRandomTopic}
+        />
 
         <div className="space-y-8">
           {Object.entries(topicsByCategory).map(([categoryId, topics]) => (
-            <div key={categoryId} className="mb-6">
-              <h2 className="text-xl font-semibold text-white mb-4">{getCategoryName(categoryId)}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {topics.map((topic) => {
-                  const TopicIcon = getTopicIcon(topic);
-                  const isCompleted = completedTopics.includes(topic.id);
-                  
-                  return (
-                    <button 
-                      key={topic.id}
-                      onClick={() => handleTopicSelect(topic.id)}
-                      className={`flex items-center gap-3 p-4 rounded-lg transition-all transform hover:scale-105 ${
-                        isCompleted 
-                          ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400' 
-                          : 'bg-white/10 backdrop-blur-sm text-white hover:bg-white/20'
-                      }`}
-                    >
-                      <div className="p-2 rounded-full bg-purple-500/20">
-                        {React.createElement(TopicIcon, { className: "w-5 h-5" })}
-                      </div>
-                      <span className="flex-1 text-left">{topic.name}</span>
-                      {isCompleted && (
-                        <Check className="w-5 h-5 text-green-500" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            <TopicCategory
+              key={categoryId}
+              categoryName={getCategoryName(categoryId)}
+              topics={topics}
+              completedTopics={completedTopics}
+              onTopicSelect={handleTopicSelect}
+            />
           ))}
           
           {Object.keys(topicsByCategory).length === 0 && (

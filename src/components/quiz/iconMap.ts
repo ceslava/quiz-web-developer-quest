@@ -1,0 +1,55 @@
+
+import { 
+  Brain, Code, Palette, Globe, FilmIcon, Users, Box,
+  BookOpen, Dumbbell, Music, History, ChefHat, Microscope,
+  Gamepad2, Car, Shield, Star, Leaf, Flask, Atom, Tv,
+  Heart, Clock, PaintBucket, Ball, Basketball, Tennis,
+  Cake, Wine, Building, Flag, Landmark
+} from 'lucide-react';
+
+export const IconMap: Record<string, React.ElementType> = {
+  'desarrollo-web': Code,
+  'ia': Brain,
+  'blockchain': Globe,
+  'ciberseguridad': Shield,
+  'ux': Palette,
+  'figma': Palette,
+  'tipografia': BookOpen,
+  '3d': Box,
+  'espacio': Star,
+  'biologia': Leaf,
+  'quimica': Flask,
+  'fisica': Atom,
+  'cine': FilmIcon,
+  'series': Tv,
+  'videojuegos': Gamepad2,
+  'anime': Heart,
+  'historia': Clock,
+  'arte': PaintBucket,
+  'musica': Music,
+  'literatura': BookOpen,
+  'futbol': Ball,
+  'baloncesto': Basketball,
+  'tenis': Tennis,
+  'f1': Car,
+  'cocina': ChefHat,
+  'reposteria': Cake,
+  'vinos': Wine,
+  'comidas-mundo': Globe,
+  'paises': Globe,
+  'capitales': Building,
+  'banderas': Flag,
+  'maravillas': Landmark,
+  // Category icons
+  'tecnologia': Brain,
+  'desarrollo': Code,
+  'diseño': Palette,
+  'cultura': Users,
+  'entretenimiento': FilmIcon,
+  'geografia': Globe,
+  'ciencia': Microscope,
+  'deportes': Dumbbell,
+  'gastronomia': ChefHat,
+  // Default
+  'default': Box
+};
