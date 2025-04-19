@@ -2,15 +2,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { componentTagger } from "lovable-tagger"
 
-// https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react({
-      // Opciones adicionales si las necesitas
       include: "**/*.{jsx,tsx}",
-    })
-  ],
+    }),
+    mode === 'development' && componentTagger(),
+  ].filter(Boolean),
   css: {
     postcss: './postcss.config.cjs',
   },
@@ -20,19 +20,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 8080
-  },
-  // Add this section to specify the TypeScript configuration
-  optimizeDeps: {
-    esbuildOptions: {
-      tsconfigRaw: {
-        compilerOptions: {
-          experimentalDecorators: true,
-          target: "es2020",
-          module: "esnext",
-          moduleResolution: "bundler"
-        }
-      }
-    }
+    host: "::",
+    port: 8080,
   }
-})
+}))
