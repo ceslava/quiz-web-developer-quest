@@ -17,7 +17,8 @@ import {
   ChefHat,
   Microscope,
   Gamepad2,
-  Car
+  Car,
+  Shield
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
