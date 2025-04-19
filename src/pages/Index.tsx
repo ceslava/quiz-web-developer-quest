@@ -61,7 +61,7 @@ const Index = () => {
   const handleNameSubmit = (name: string) => {
     setUserName(name);
     localStorage.setItem('userName', name);
-    setShowTopics(true);
+    window.location.href = '/topics'; // Redirige a la pantalla de temas
   };
 
   const handleStart = (data: { topic: string; }) => {
