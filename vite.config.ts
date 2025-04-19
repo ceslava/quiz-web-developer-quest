@@ -21,5 +21,18 @@ export default defineConfig({
   },
   server: {
     port: 8080
+  },
+  // Add this section to specify the TypeScript configuration
+  optimizeDeps: {
+    esbuildOptions: {
+      tsconfigRaw: {
+        compilerOptions: {
+          experimentalDecorators: true,
+          target: "es2020",
+          module: "esnext",
+          moduleResolution: "bundler"
+        }
+      }
+    }
   }
 })
